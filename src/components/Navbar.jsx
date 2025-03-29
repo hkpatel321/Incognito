@@ -1,9 +1,11 @@
 import React from 'react'
-import { Link, useNavigate } from 'react-router-dom'
+import { Link, useNavigate, useLocation } from 'react-router-dom'
 import { useTheme } from '../context/ThemeContext'
 
 const Navbar = () => {
   const { theme, toggleTheme } = useTheme()
+  const location = useLocation()
+  const isLoggedIn = location.pathname === '/dashboard' || location.pathname === '/new-project'
 
   return (
     <nav className={`fixed w-full z-20 top-0 left-0 ${
@@ -16,29 +18,41 @@ const Navbar = () => {
           <span className="self-center text-xl font-semibold whitespace-nowrap">Incognito</span>
         </a>
         <div className="flex items-center gap-4">
-          <Link
-            to="/chat"
-            className="px-4 py-2 rounded-lg bg-gradient-to-r from-purple-500 to-pink-500 text-white hover:from-pink-500 hover:to-purple-500 transform hover:-translate-y-1 transition-all duration-300"
-          >
-            Chat
-          </Link>
-         
-          <Link
-            to="/login"
-            className="px-4 py-2 rounded-lg bg-gradient-to-r from-purple-500 to-pink-500 text-white hover:from-pink-500 hover:to-purple-500 transform hover:-translate-y-1 transition-all duration-300"
-          >
-            Login
-          </Link>
-          <Link
-            to="/signup"
-            className={`px-4 py-2 rounded-lg ${
-              theme === 'dark'
-                ? 'bg-gray-900/50 border border-gray-800'
-                : 'bg-white/50 border border-gray-200'
-            } hover:scale-105 transition-all duration-300`}
-          >
-            Sign Up
-          </Link>
+          {isLoggedIn ? (
+            <>
+              <Link
+                to="/dashboard"
+                className="px-4 py-2 rounded-lg bg-gradient-to-r from-purple-500 to-pink-500 text-white hover:from-pink-500 hover:to-purple-500 transform hover:-translate-y-1 transition-all duration-300"
+              >
+                Dashboard
+              </Link>
+              <Link
+                to="/chat"
+                className="px-4 py-2 rounded-lg bg-gradient-to-r from-purple-500 to-pink-500 text-white hover:from-pink-500 hover:to-purple-500 transform hover:-translate-y-1 transition-all duration-300"
+              >
+                Chat
+              </Link>
+            </>
+          ) : (
+            <>
+              <Link
+                to="/login"
+                className="px-4 py-2 rounded-lg bg-gradient-to-r from-purple-500 to-pink-500 text-white hover:from-pink-500 hover:to-purple-500 transform hover:-translate-y-1 transition-all duration-300"
+              >
+                Login
+              </Link>
+              <Link
+                to="/signup"
+                className={`px-4 py-2 rounded-lg ${
+                  theme === 'dark'
+                    ? 'bg-gray-900/50 border border-gray-800'
+                    : 'bg-white/50 border border-gray-200'
+                } hover:scale-105 transition-all duration-300`}
+              >
+                Sign Up
+              </Link>
+            </>
+          )}
           <button
             onClick={toggleTheme}
             className={`p-2 rounded-lg ${

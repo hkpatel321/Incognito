@@ -1,14 +1,18 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { useTheme } from '../context/ThemeContext'
 
 function Login() {
   const navigate = useNavigate();
   const { theme } = useTheme();
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
   
   const handleSubmit = (e) => {
     e.preventDefault();
-   
+    console.log({ email, password });
+    // Add your login logic here
+    navigate('/dashboard'); // Navigate to dashboard after successful login
   };
 
   return (
@@ -24,7 +28,10 @@ function Login() {
             <div className="space-y-2">
               <input 
                 type="email" 
-                placeholder="Email" 
+                id="email"
+                placeholder="Email"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
                 className={`w-full px-4 py-3 rounded-lg ${
                   theme === 'dark'
                     ? 'bg-gray-800/50 border-gray-700 text-white placeholder-gray-400'
@@ -35,7 +42,10 @@ function Login() {
             <div className="space-y-2">
               <input 
                 type="password" 
-                placeholder="Password" 
+                id="password"
+                placeholder="Password"
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
                 className={`w-full px-4 py-3 rounded-lg ${
                   theme === 'dark'
                     ? 'bg-gray-800/50 border-gray-700 text-white placeholder-gray-400'

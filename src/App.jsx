@@ -10,6 +10,9 @@ import CustomCursor from './components/CustomCursor'
 import { ThemeProvider, useTheme } from './context/ThemeContext'
 import NeuralBackground from './components/NeuralBackground'
 import Chat from './components/Chat'
+import Dashboard from './components/Dashboard'
+import ProjectForm from './components/ProjectForm'
+import ProjectDashboard from './components/ProjectDashboard'
 
 function AppContent() {
   const { theme } = useTheme();
@@ -70,7 +73,10 @@ function AppContent() {
             <Route path="/" element={<Login />} />
             <Route path="/login" element={<Login />} />
             <Route path="/signup" element={<Signup />} />
+            <Route path="/dashboard" element={<Dashboard />} />
+            <Route path="/new-project" element={<ProjectForm />} />
             <Route path="/chat" element={<Chat />} />
+            <Route path="/project/:projectId" element={<ProjectDashboard />} />
           </Routes>
         </div>
       </div>

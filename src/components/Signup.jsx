@@ -1,11 +1,20 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { useTheme } from '../context/ThemeContext'
 
 function Signup() {
   const navigate = useNavigate();
   const { theme } = useTheme();
-  
+  const [fullName, setFullName] = useState('');
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    console.log({ fullName, email, password });
+    // Add your signup logic here
+  };
+
   return (
     <div className="flex min-h-[calc(100vh-64px)] items-center justify-center p-6">
       <div className="w-full max-w-md transform hover:scale-105 transition-all duration-500 hover:shadow-[0_20px_50px_rgba(8,_112,_184,_0.7)]">
@@ -15,11 +24,13 @@ function Signup() {
             : 'bg-white/50 border-gray-200 shadow-[0_0_15px_rgba(168,_85,_247,_0.2)]'
         } backdrop-blur-xl p-8 rounded-2xl shadow-2xl border`}>
           <h2 className="text-3xl font-bold text-center mb-8 bg-gradient-to-r from-purple-500 to-pink-500 bg-clip-text text-transparent">Create Account</h2>
-          <form className="space-y-6">
+          <form className="space-y-6" onSubmit={handleSubmit}>
             <div className="space-y-2">
               <input 
                 type="text" 
-                placeholder="Full Name" 
+                placeholder="Full Name"
+                value={fullName}
+                onChange={(e) => setFullName(e.target.value)}
                 className={`w-full px-4 py-3 rounded-lg ${
                   theme === 'dark'
                     ? 'bg-gray-800/50 border-gray-700 text-white placeholder-gray-400'
@@ -30,7 +41,9 @@ function Signup() {
             <div className="space-y-2">
               <input 
                 type="email" 
-                placeholder="Email" 
+                placeholder="Email"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
                 className={`w-full px-4 py-3 rounded-lg ${
                   theme === 'dark'
                     ? 'bg-gray-800/50 border-gray-700 text-white placeholder-gray-400'
@@ -41,7 +54,9 @@ function Signup() {
             <div className="space-y-2">
               <input 
                 type="password" 
-                placeholder="Password" 
+                placeholder="Password"
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
                 className={`w-full px-4 py-3 rounded-lg ${
                   theme === 'dark'
                     ? 'bg-gray-800/50 border-gray-700 text-white placeholder-gray-400'
