@@ -60,6 +60,7 @@ function Login() {
           <p className={`mt-4 text-center ${theme === 'dark' ? 'text-gray-400' : 'text-gray-600'}`}>
             Don't have an account?{' '}
             <button 
+              id="login"
               onClick={() => navigate('/signup')}
               className="text-purple-500 hover:text-pink-500 transition-colors duration-300"
             >
