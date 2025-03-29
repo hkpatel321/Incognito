@@ -53,14 +53,14 @@ function Login() {
                 } border focus:outline-none focus:border-purple-500 transform transition-all duration-300`} 
               />
             </div>
-            <button className="w-full py-3 font-semibold rounded-lg bg-gradient-to-r from-purple-500 to-pink-500 text-white hover:from-pink-500 hover:to-purple-500 transform hover:-translate-y-1 transition-all duration-300 hover:shadow-[0_10px_20px_rgba(168,_85,_247,_0.4)]">
+            <button id="login" className="w-full py-3 font-semibold rounded-lg bg-gradient-to-r from-purple-500 to-pink-500 text-white hover:from-pink-500 hover:to-purple-500 transform hover:-translate-y-1 transition-all duration-300 hover:shadow-[0_10px_20px_rgba(168,_85,_247,_0.4)]">
               Login
             </button>
           </form>
           <p className={`mt-4 text-center ${theme === 'dark' ? 'text-gray-400' : 'text-gray-600'}`}>
             Don't have an account?{' '}
             <button 
-              id="login"
+              
               onClick={() => navigate('/signup')}
               className="text-purple-500 hover:text-pink-500 transition-colors duration-300"
             >
