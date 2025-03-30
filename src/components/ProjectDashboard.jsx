@@ -107,23 +107,77 @@ function ProjectDashboard() {
       if (!response.ok) {
         throw new Error(`HTTP error! Status: ${response.status}`);
       }
+      try {
+        setIsLoading(true);
+        const response = await fetch('https://4bb0-2401-4900-7c1b-e27c-e849-9e31-89cf-ab3d.ngrok-free.app/report', {
+          method: 'GET',
+          headers: {
+            'ngrok-skip-browser-warning': 'true',
+            'Content-Type': 'application/json'
+          },
+          timeout: 50000
+        });
+  
+        if (!response.ok) {
+          throw new Error(`HTTP error! Status: ${response.status}`);
+        }
+  
+        // const data = await response.json();
+        // console.log(data);
+  
+        // Update test report data for the donut chart
+        setTestReportData({
+          passed: data.passed_tests,
+          failed: data.failed_tests
+        });
 
-      const data = await response.json();
-      console.log(data);
+        const failedTestCases = data.results ? data.results.filter(test => (test.status==="FAILED")) : [];
+        console.log("krish",failedTestCases);
+        setFailedTests(failedTestCases);
+
+        if (data.status) {
+          setTestMessage('All test cases passed successfully! 🎉');
+          setMessageType('success');
+        } else {
+  
+          setTestMessage(`System test completed with ${failedTestCases.length} failed tests`);
+          setMessageType('error');
+        }
+  
+        // Create and download the file
+        const blob = new Blob([JSON.stringify(data, null, 2)], { type: 'application/json' });
+        const url = window.URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = 'test-report.json';
+        document.body.appendChild(a);
+        a.click();
+        window.URL.revokeObjectURL(url);
+        document.body.removeChild(a);
+      } catch (error) {
+        console.error('Error downloading report:', error);
+        setTestMessage('Failed to download report');
+        setMessageType('error');
+      } finally {
+        setIsLoading(false);
+      }
+
+      // const data = await response.json();
+      // console.log("handleSystemTest",data);
       
       // Extract failed tests
-      const failedTestCases = data.results ? data.results.filter(test => (test.status==="FAILED")) : [];
-      console.log("krish",failedTestCases);
-      setFailedTests(failedTestCases);
+      // const failedTestCases = data.results ? data.results.filter(test => (test.status==="FAILED")) : [];
+      // console.log("krish",failedTestCases);
+      // setFailedTests(failedTestCases);
       
-      if (data.status) {
-        setTestMessage('All test cases passed successfully! 🎉');
-        setMessageType('success');
-      } else {
+      // if (data.status) {
+      //   setTestMessage('All test cases passed successfully! 🎉');
+      //   setMessageType('success');
+      // } else {
 
-        setTestMessage(`System test completed with ${failedTestCases.length} failed tests`);
-        setMessageType('error');
-      }
+      //   setTestMessage(`System test completed with ${failedTestCases.length} failed tests`);
+      //   setMessageType('error');
+      // }
       setIsReportAvailable(true);
     } catch (error) {
       console.error('Error fetching test status:', error);
