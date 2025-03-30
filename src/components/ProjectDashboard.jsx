@@ -44,7 +44,7 @@ function ProjectDashboard() {
   const handleDownloadReport = async () => {
     try {
       setIsLoading(true);
-      const response = await fetch('https://4bb0-2401-4900-7c1b-e27c-e849-9e31-89cf-ab3d.ngrok-free.app/report', {
+      const response = await fetch('https://f04b-2409-40c1-200b-f09-8d67-5ed6-ef82-edd3.ngrok-free.app/report', {
         method: 'GET',
         headers: {
           'ngrok-skip-browser-warning': 'true',
@@ -92,7 +92,7 @@ function ProjectDashboard() {
       setIsReportAvailable(false);
       setFailedTests([]);
       
-      const response = await fetch('https://4bb0-2401-4900-7c1b-e27c-e849-9e31-89cf-ab3d.ngrok-free.app/test-status', {
+      const response = await fetch('https://f04b-2409-40c1-200b-f09-8d67-5ed6-ef82-edd3.ngrok-free.app/test-status', {
         method: 'POST',
         headers: {
             'ngrok-skip-browser-warning': 'true',
@@ -109,7 +109,7 @@ function ProjectDashboard() {
       }
       try {
         setIsLoading(true);
-        const response = await fetch('https://4bb0-2401-4900-7c1b-e27c-e849-9e31-89cf-ab3d.ngrok-free.app/report', {
+        const response = await fetch('https://f04b-2409-40c1-200b-f09-8d67-5ed6-ef82-edd3.ngrok-free.app/report', {
           method: 'GET',
           headers: {
             'ngrok-skip-browser-warning': 'true',
