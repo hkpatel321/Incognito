@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { useTheme } from '../context/ThemeContext';
 import { Line, Doughnut, Bar } from 'react-chartjs-2';
@@ -32,6 +32,21 @@ function ProjectDashboard() {
   const { projectId } = useParams();
   const { theme } = useTheme();
   const navigate = useNavigate();
+  const [isLoading, setIsLoading] = useState(false);
+
+  const handleSystemTest = async () => {
+    try {
+      setIsLoading(true);
+      const response = await fetch('https://d5f7-2401-4900-7903-cc20-953f-8402-1893-c973.ngrok-free.app/test-status');
+      const data = await response.json();
+      alert(`Test Status: ${JSON.stringify(data)}`);
+    } catch (error) {
+      console.error('Error fetching test status:', error);
+      alert('Failed to get test status');
+    } finally {
+      setIsLoading(false);
+    }
+  };
 
   // Mock data based on projectId
   const mockProjects = {
@@ -199,10 +214,13 @@ function ProjectDashboard() {
               Back to Projects
             </button>
             <button
-              onClick={() => alert('Starting System Test...')}
-              className="px-6 py-3 rounded-lg bg-gradient-to-r from-blue-500 to-cyan-500 text-white hover:from-cyan-500 hover:to-blue-500 transform hover:-translate-y-1 transition-all duration-300"
+              onClick={handleSystemTest}
+              disabled={isLoading}
+              className={`px-6 py-3 rounded-lg bg-gradient-to-r from-blue-500 to-cyan-500 text-white hover:from-cyan-500 hover:to-blue-500 transform hover:-translate-y-1 transition-all duration-300 ${
+                isLoading ? 'opacity-50 cursor-not-allowed' : ''
+              }`}
             >
-              System Test
+              {isLoading ? 'Running Test...' : 'System Test'}
             </button>
           </div>
         </div>
