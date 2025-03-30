@@ -139,19 +139,20 @@ function ProjectDashboard() {
             timeout: 50000
           });
           const responseData = await response.json(); // ✅ Extract JSON response
-          
-        setRess(responseData); 
-        // ✅ Set state with actual response data
-        setTimeout(() => {
-          
-          console.log('ress', ress); 
-        },1000)
-        console.log("responseData", responseData);
+          console.log("responseData", responseData);
+          setRess(responseData); 
+          // ✅ Set state with actual response data
+          // setTimeout(() => {
+            
+            // console.log('ress', ress); 
+          // },1000)
+          console.log("responseData", responseData);
 
         
         } catch (error) {
           console.log("error while add object",error);
         }
+        console.log("ress outside" ,ress);
   
         // Update test report data for the donut chart
         setTestReportData({
