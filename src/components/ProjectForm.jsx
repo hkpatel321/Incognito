@@ -42,7 +42,8 @@ function ProjectForm() {
       navigate('/login');
       return;
     }
-
+    let arr=["Planning","In Progress","Completed"];
+    let randomIndex = Math.floor(Math.random() * arr.length);
     const projectData = {
       email,
       title: formData.projectTitle,
@@ -51,7 +52,7 @@ function ProjectForm() {
       gitlabLink: formData.gitlabLink,
       githubLink: formData.githubLink,
       websiteUrl: formData.websiteUrl,
-      status: 'active',
+      status: arr[randomIndex],
     };
 
     try {
