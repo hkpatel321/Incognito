@@ -280,6 +280,29 @@ function ProjectDashboard() {
   }));
 
   // Generate mock data for test performance over time
+  // const timeSeriesData = {
+  //   labels: Array.from({ length: 7 }, (_, i) => {
+  //     const date = new Date();
+  //     date.setDate(date.getDate() - (6 - i));
+  //     return date.toLocaleDateString();
+  //   }),
+  //   datasets: [
+  //     {
+  //       label: 'Pass Rate',
+  //       data: Array.from({ length: 7 }, () => Math.floor(Math.random() * 30) + 70),
+  //       borderColor: theme === 'dark' ? '#10B981' : '#8B5CF6',
+  //       tension: 0.4,
+  //       fill: false,
+  //     },
+  //     {
+  //       label: 'Test Coverage',
+  //       data: Array.from({ length: 7 }, () => Math.floor(Math.random() * 20) + 75),
+  //       borderColor: theme === 'dark' ? '#F59E0B' : '#EC4899',
+  //       tension: 0.4,
+  //       fill: false,
+  //     }
+  //   ]
+  // };
   const timeSeriesData = {
     labels: Array.from({ length: 7 }, (_, i) => {
       const date = new Date();
@@ -289,20 +312,41 @@ function ProjectDashboard() {
     datasets: [
       {
         label: 'Pass Rate',
-        data: Array.from({ length: 7 }, () => Math.floor(Math.random() * 30) + 70),
+        data: Array.from({ length: 7 }, (_, i) => {
+          const date = new Date();
+          date.setDate(date.getDate() - (6 - i));
+          const formattedDate = date.toISOString().split('T')[0];
+  
+          const run = ress?.response?.jsonObjects?.find(r => 
+            r.execution_date.startsWith(formattedDate)
+          );
+          
+          return run ? ((run.passed_tests / run.total_tests) * 100).toFixed(2) : null;
+        }),
         borderColor: theme === 'dark' ? '#10B981' : '#8B5CF6',
         tension: 0.4,
         fill: false,
       },
       {
         label: 'Test Coverage',
-        data: Array.from({ length: 7 }, () => Math.floor(Math.random() * 20) + 75),
+        data: Array.from({ length: 7 }, (_, i) => {
+          const date = new Date();
+          date.setDate(date.getDate() - (6 - i));
+          const formattedDate = date.toISOString().split('T')[0];
+  
+          const run = ress?.response?.jsonObjects?.find(r => 
+            r.execution_date.startsWith(formattedDate)
+          );
+          
+          return run ? ((run.total_tests / 10) * 100).toFixed(2) : null; // Assuming 10 is max tests
+        }),
         borderColor: theme === 'dark' ? '#F59E0B' : '#EC4899',
         tension: 0.4,
         fill: false,
       }
     ]
   };
+  
 
   // Update test distribution data dynamically
   const testDistributionData = {
