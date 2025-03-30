@@ -39,7 +39,7 @@ function ProjectDashboard() {
   const [isReportAvailable, setIsReportAvailable] = useState(false); // Add this line
   const [testReportData, setTestReportData] = useState({ passed: 0, failed: 0 });
   const [failedTests, setFailedTests] = useState([]);
-  const [suggestions, setSuggestions] = useState({});
+  // const [suggestions, setSuggestions] = useState({});
 
   const handleDownloadReport = async () => {
     try {
@@ -112,7 +112,7 @@ function ProjectDashboard() {
       console.log(data);
       
       // Extract failed tests
-      const failedTestCases = data.results ? data.results.filter(test => !test.passed) : [];
+      const failedTestCases = data.results ? data.results.filter(test => (test.status==="FAILED")) : [];
       setFailedTests(failedTestCases);
       
       if (data.status) {
