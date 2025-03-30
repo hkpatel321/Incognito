@@ -3,7 +3,6 @@ import axios from 'axios';
 import { useParams, useNavigate } from 'react-router-dom';
 import { useTheme } from '../context/ThemeContext';
 import { Line, Doughnut, Bar } from 'react-chartjs-2';
-import { useParams } from 'react-router-dom';
 import {
   Chart as ChartJS,
   CategoryScale,
@@ -138,8 +137,10 @@ function ProjectDashboard() {
             },
             timeout: 50000
           });
-          setRess(response);
-          console.log('ress',ress)
+          const responseData = await response.json(); // ✅ Extract JSON response
+          setRess(responseData); // ✅ Set state with actual response data
+
+          console.log('ress', responseData); 
         } catch (error) {
           console.log("error while add object",error);
         }
