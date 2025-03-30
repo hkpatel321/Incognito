@@ -139,9 +139,11 @@ function ProjectDashboard() {
             timeout: 50000
           });
           const responseData = await response.json(); // ✅ Extract JSON response
+          console.log('ress', ress); 
         setRess(responseData); // ✅ Set state with actual response data
+        console.log("responseData", responseData);
 
-        console.log('ress', ress); 
+        
         } catch (error) {
           console.log("error while add object",error);
         }
