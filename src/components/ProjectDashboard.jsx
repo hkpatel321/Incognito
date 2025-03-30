@@ -39,15 +39,21 @@ function ProjectDashboard() {
     try {
     
       setIsLoading(true);
-      console.log("krish");
-      const response = await axios.get('https://1386-202-131-110-60.ngrok-free.app/test-status',{timeout:50000} , {
+      const response = await fetch('https://1386-202-131-110-60.ngrok-free.app/test-status', {
+        method: 'GET',
         headers: {
-          'ngrok-skip-browser-warning': 'true',
-          'Content-Type': 'application/json'
-      }
-      });
-      console.log(response);
-      alert(`Test Status: ${JSON.stringify(response.data)}`);
+            'ngrok-skip-browser-warning': 'true',
+            'Content-Type': 'application/json'
+        },
+        timeout: 50000 // fetch doesn't support timeout directly
+    });
+
+    if (!response.ok) {
+        throw new Error(`HTTP error! Status: ${response.status}`);
+    }
+
+    const data = await response.json();
+    console.log(data);
     } catch (error) {
       console.log("krish");
       console.error('Error fetching test status:', error);
