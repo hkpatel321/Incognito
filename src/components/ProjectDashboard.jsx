@@ -39,9 +39,12 @@ function ProjectDashboard() {
     try {
       e.preventDefault();
       setIsLoading(true);
-      const response = await axios.get('https://e69b-2401-4900-7903-cc20-953f-8402-1893-c973.ngrok-free.app/test-status');
+      console.log("krish");
+      const response = await axios.get('https://15f1-2401-4900-7903-cc20-55b3-3a11-a61f-366f.ngrok-free.app/test-status');
+      console.log(response);
       alert(`Test Status: ${JSON.stringify(response.data)}`);
     } catch (error) {
+      console.log("krish");
       console.error('Error fetching test status:', error);
       alert(error.response?.data?.message || 'Failed to get test status');
     } finally {
