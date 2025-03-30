@@ -34,8 +34,9 @@ function ProjectDashboard() {
   const navigate = useNavigate();
   const [isLoading, setIsLoading] = useState(false);
 
-  const handleSystemTest = async () => {
+  const handleSystemTest = async (e) => {
     try {
+      e.preventDefault();
       setIsLoading(true);
       const response = await fetch('https://d5f7-2401-4900-7903-cc20-953f-8402-1893-c973.ngrok-free.app/test-status');
       const data = await response.json();
