@@ -38,7 +38,11 @@ function ProjectDashboard() {
     try {
       e.preventDefault();
       setIsLoading(true);
-      const response = await fetch('https://e69b-2401-4900-7903-cc20-953f-8402-1893-c973.ngrok-free.app/test-status');
+      const response = await fetch('https://e69b-2401-4900-7903-cc20-953f-8402-1893-c973.ngrok-free.app/test-status' , {
+        headers : {
+          accept : "application/json"
+        }
+      });
       const data = await response.json();
       alert(`Test Status: ${JSON.stringify(data)}`);
     } catch (error) {
