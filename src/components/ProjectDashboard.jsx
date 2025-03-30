@@ -123,7 +123,7 @@ function ProjectDashboard() {
         }
   
         const data = await response.json();
-        console.log(data);
+        console.log("testReportData", data);
   
         // Update test report data for the donut chart
         setTestReportData({
