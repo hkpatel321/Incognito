@@ -122,8 +122,8 @@ function ProjectDashboard() {
           throw new Error(`HTTP error! Status: ${response.status}`);
         }
   
-        // const data = await response.json();
-        // console.log(data);
+        const data = await response.json();
+        console.log(data);
   
         // Update test report data for the donut chart
         setTestReportData({
