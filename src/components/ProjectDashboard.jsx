@@ -34,10 +34,13 @@ function ProjectDashboard() {
   const { theme } = useTheme();
   const navigate = useNavigate();
   const [isLoading, setIsLoading] = useState(false);
+  const [testMessage, setTestMessage] = useState('');
+  const [messageType, setMessageType] = useState(''); // 'success' or 'error'
 
   const handleSystemTest = async () => {
     try {
       setIsLoading(true);
+      setTestMessage('');
       const response = await fetch('https://1386-202-131-110-60.ngrok-free.app/test-status', {
         method: 'GET',
         headers: {
@@ -56,13 +59,16 @@ function ProjectDashboard() {
       
       // Display appropriate message based on status
       if (data.status) {
-        alert('All test cases passed successfully! 🎉');
+        setTestMessage('All test cases passed successfully! 🎉');
+        setMessageType('success');
       } else {
-        alert('System test failed! ❌');
+        setTestMessage('System test failed! ❌');
+        setMessageType('error');
       }
     } catch (error) {
       console.error('Error fetching test status:', error);
-      alert('Failed to get test status');
+      setTestMessage('Failed to get test status');
+      setMessageType('error');
     } finally {
       setIsLoading(false);
     }
@@ -244,6 +250,20 @@ function ProjectDashboard() {
             </button>
           </div>
         </div>
+
+        {testMessage && (
+          <div className={`mb-6 p-4 rounded-lg text-center ${
+            messageType === 'success'
+              ? theme === 'dark'
+                ? 'bg-green-900/50 text-green-300 border border-green-700'
+                : 'bg-green-100 text-green-800 border border-green-200'
+              : theme === 'dark'
+                ? 'bg-red-900/50 text-red-300 border border-red-700'
+                : 'bg-red-100 text-red-800 border border-red-200'
+          }`}>
+            {testMessage}
+          </div>
+        )}
 
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 mb-8">
           {['Total Tests', 'Pass Rate', 'Status'].map((metric, index) => (
