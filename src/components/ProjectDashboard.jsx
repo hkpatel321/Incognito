@@ -436,7 +436,7 @@ function ProjectDashboard() {
           </div>
         )}
 
-        {failedTests.length > 0 && (
+        {/* {failedTests.length > 0 && (
           <div className={`mb-6 ${
             theme === 'dark'
               ? 'bg-gray-900/50 border-gray-800'
@@ -455,7 +455,7 @@ function ProjectDashboard() {
               ))}
             </div>
           </div>
-        )}
+        )} */}
 
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 mb-8">
           {['Total Tests', 'Pass Rate', 'Status'].map((metric, index) => (
@@ -556,7 +556,7 @@ function ProjectDashboard() {
                   </span>
                 </div>
               ))} */}
-                            {ress?.response?.jsonObjects
+                            {/* {ress?.response?.jsonObjects
                 ?.slice() // Create a copy of the array
                 .sort((a, b) => new Date(b.execution_date) - new Date(a.execution_date)) // Sort by latest execution date
                 .map((run, index) => (
@@ -568,7 +568,20 @@ function ProjectDashboard() {
                         : 'No Tests'}
                     </span>
                   </div>
-              ))}
+              ))} */}
+              {ress?.response?.jsonObjects
+  ?.slice() // Create a copy of the array
+  .sort((a, b) => new Date(b.execution_date).getTime() - new Date(a.execution_date).getTime()) // Ensure proper sorting
+  .map((run, index) => (
+    <div key={index} className="flex justify-between items-center">
+      <span>{new Date(run.execution_date).toLocaleString()}</span>
+      <span className="px-3 py-1 rounded-full text-sm">
+        {run.total_tests > 0 
+          ? `${((run.passed_tests / run.total_tests) * 100).toFixed(2)}% Passed`
+          : 'No Tests'}
+      </span>
+    </div>
+))}
             </div>
           </div>
         </div>
