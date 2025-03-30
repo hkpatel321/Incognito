@@ -5,7 +5,14 @@ import { useTheme } from '../context/ThemeContext'
 const Navbar = () => {
   const { theme, toggleTheme } = useTheme()
   const location = useLocation()
-  const isLoggedIn = location.pathname === '/dashboard' || location.pathname === '/new-project'
+  const navigate = useNavigate();
+  const isLoggedIn = localStorage.getItem("token") !== null;
+
+  const handleLogout = () => {
+    localStorage.removeItem("token");
+    localStorage.removeItem("email");
+    navigate('/login');
+  };
 
   return (
     <nav className={`fixed w-full z-20 top-0 left-0 ${
@@ -32,6 +39,12 @@ const Navbar = () => {
               >
                 Chat
               </Link>
+              <button
+                onClick={handleLogout}
+                className="px-4 py-2 rounded-lg bg-gradient-to-r from-red-500 to-pink-500 text-white hover:from-pink-500 hover:to-red-500 transform hover:-translate-y-1 transition-all duration-300"
+              >
+                Log Out
+              </button>
             </>
           ) : (
             <>
