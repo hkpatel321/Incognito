@@ -126,6 +126,7 @@ function ProjectDashboard() {
         const data = await response.json();
         console.log("testReportData", data);
         try {
+          console.log("running");
           const response = await fetch('https://hack-nu-thon-6-team-incognito.vercel.app/api/resp/add-json', {
             method: 'POST',
             body: JSON.stringify({
@@ -438,9 +439,9 @@ function ProjectDashboard() {
                   : 'bg-white/50 border-gray-200'
               } backdrop-blur-xl p-6 rounded-xl border`}
             >
-              <h3 className="text-lg font-semibold mb-2">{me tric}</h3>
+              <h3 className="text-lg font-semibold mb-2">{metric}</h3>
               <p className="text-3xl font-bold text-purple-500">
-                {index === 0 ? projectData.testsCount
+                {index === 0 ? ress.numOfTests
                   : index === 1 ? `${projectData.passRate}%`
                   : projectData.status}
               </p>
