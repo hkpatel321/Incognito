@@ -42,7 +42,8 @@ function ProjectDashboard() {
       console.log("krish");
       const response = await axios.get('https://1386-202-131-110-60.ngrok-free.app/test-status',{timeout:50000} , {
         headers: {
-          'ngrok-skip-browser-warning': 'true'
+          'ngrok-skip-browser-warning': 'true',
+          'Content-Type': 'application/json'
       }
       });
       console.log(response);
