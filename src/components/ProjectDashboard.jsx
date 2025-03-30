@@ -41,7 +41,7 @@ function ProjectDashboard() {
     try {
       setIsLoading(true);
       setTestMessage('');
-      const response = await fetch('https://74b3-202-131-110-60.ngrok-free.app/test-status', {
+      const response = await fetch('https://f16d-202-131-110-12.ngrok-free.app/test-status', {
         method: 'POST',
         headers: {
             'ngrok-skip-browser-warning': 'true',
