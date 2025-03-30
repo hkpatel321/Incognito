@@ -6,6 +6,7 @@ function ProjectForm() {
   const { theme } = useTheme()
   const navigate = useNavigate()
   const [formData, setFormData] = useState({
+    projectTitle:'',
     personalAccessToken: '',
     figmaFileId: '',
     figmaLink: '',
@@ -18,6 +19,11 @@ function ProjectForm() {
   const validateForm = () => {
     const newErrors = {}
     
+    // Project Title validation
+    if (!formData.projectTitle.trim()) {
+      newErrors.projectTitle = 'Project Title is required'
+    }
+
     // Personal Access Token validation
     if (!formData.personalAccessToken.trim()) {
       newErrors.personalAccessToken = 'Personal Access Token is required'
@@ -83,6 +89,7 @@ function ProjectForm() {
           </h2>
           <form onSubmit={handleSubmit} className="space-y-4">
             {[
+              { name: 'projectTitle', label: 'Project Title', type: 'text' },
               { name: 'personalAccessToken', label: 'Personal Access Token', type: 'password' },
               { name: 'figmaFileId', label: 'Figma File ID', type: 'text' },
               { name: 'figmaLink', label: 'Figma Full Link', type: 'url' },
