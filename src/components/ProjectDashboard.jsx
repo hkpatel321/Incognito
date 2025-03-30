@@ -56,7 +56,7 @@ function ProjectDashboard() {
       }
 
       const data = await response.json();
-      
+      console.log(data);
       // Create and download the file
       const blob = new Blob([JSON.stringify(data, null, 2)], { type: 'application/json' });
       const url = window.URL.createObjectURL(blob);
