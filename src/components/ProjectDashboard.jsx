@@ -113,12 +113,14 @@ function ProjectDashboard() {
       
       // Extract failed tests
       const failedTestCases = data.results ? data.results.filter(test => (test.status==="FAILED")) : [];
+      console.log("krish",failedTestCases);
       setFailedTests(failedTestCases);
       
       if (data.status) {
         setTestMessage('All test cases passed successfully! 🎉');
         setMessageType('success');
       } else {
+
         setTestMessage(`System test completed with ${failedTestCases.length} failed tests`);
         setMessageType('error');
       }
