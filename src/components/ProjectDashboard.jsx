@@ -42,14 +42,12 @@ function ProjectDashboard() {
     try {
       setIsLoading(true);
       const response = await fetch('https://f16d-202-131-110-12.ngrok-free.app/report', {
-        method: 'POST',
+        method: 'GET',
         headers: {
           'ngrok-skip-browser-warning': 'true',
           'Content-Type': 'application/json'
         },
-        body: JSON.stringify({
-          WEBSITE_URL: "https://github.com/login"
-        }),
+    
         timeout: 50000
       });
 
