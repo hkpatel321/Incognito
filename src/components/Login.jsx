@@ -1,6 +1,6 @@
-import React, { useState } from 'react'
-import { useNavigate } from 'react-router-dom'
-import { useTheme } from '../context/ThemeContext'
+import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { useTheme } from '../context/ThemeContext';
 
 function Login() {
   const navigate = useNavigate();
@@ -8,11 +8,33 @@ function Login() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log({ email, password });
-    // Add your login logic here
-    navigate('/dashboard'); // Navigate to dashboard after successful login
+    
+    try {
+      const response = await fetch("https://hack-nu-thon-6-team-incognito.vercel.app/api/users/loginuser", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify({ email, password })
+      });
+
+      const data = await response.json();
+
+      if (response.ok) {
+        console.log("Login successful:", data);
+        // Store token if needed
+        localStorage.setItem("token", data.token);
+        navigate('/dashboard');
+      } else {
+        console.error("Login failed:", data.message);
+        alert(data.message || "Login failed");
+      }
+    } catch (error) {
+      console.error("Error:", error);
+      alert("Something went wrong. Please try again.");
+    }
   };
 
   return (
@@ -37,6 +59,7 @@ function Login() {
                     ? 'bg-gray-800/50 border-gray-700 text-white placeholder-gray-400'
                     : 'bg-gray-100/50 border-gray-300 text-gray-900 placeholder-gray-500'
                 } border focus:outline-none focus:border-purple-500 focus:ring-2 focus:ring-purple-200 transform transition-all duration-300`} 
+                required
               />
             </div>
             <div className="space-y-2">
@@ -51,6 +74,7 @@ function Login() {
                     ? 'bg-gray-800/50 border-gray-700 text-white placeholder-gray-400'
                     : 'bg-gray-100/50 border-gray-300 text-gray-900 placeholder-gray-500'
                 } border focus:outline-none focus:border-purple-500 transform transition-all duration-300`} 
+                required
               />
             </div>
             <button id="login" className="w-full py-3 font-semibold rounded-lg bg-gradient-to-r from-purple-500 to-pink-500 text-white hover:from-pink-500 hover:to-purple-500 transform hover:-translate-y-1 transition-all duration-300 hover:shadow-[0_10px_20px_rgba(168,_85,_247,_0.4)]">
@@ -60,7 +84,7 @@ function Login() {
           <p className={`mt-4 text-center ${theme === 'dark' ? 'text-gray-400' : 'text-gray-600'}`}>
             Don't have an account?{' '}
             <button 
-              
+              id="signup"
               onClick={() => navigate('/signup')}
               className="text-purple-500 hover:text-pink-500 transition-colors duration-300"
             >
@@ -70,7 +94,7 @@ function Login() {
         </div>
       </div>
     </div>
-  )
+  );
 }
 
-export default Login
+export default Login;

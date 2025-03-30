@@ -10,14 +10,57 @@ function ProjectForm() {
     figmaFileId: '',
     figmaLink: '',
     gitlabLink: '',
-    githubLink: ''
+    githubLink: '',
+    websiteUrl: '',
   })
+  const [errors, setErrors] = useState({})
+
+  const validateForm = () => {
+    const newErrors = {}
+    
+    // Personal Access Token validation
+    if (!formData.personalAccessToken.trim()) {
+      newErrors.personalAccessToken = 'Personal Access Token is required'
+    }
+
+    // Figma File ID validation
+    if (!formData.figmaFileId.trim()) {
+      newErrors.figmaFileId = 'Figma File ID is required'
+    }
+
+    // Figma Link validation
+    if (!formData.figmaLink) {
+      newErrors.figmaLink = 'Figma Link is required'
+    } else if (!formData.figmaLink.startsWith('https://www.figma.com/')) {
+      newErrors.figmaLink = 'Please enter a valid Figma URL'
+    }
+
+    // GitLab Link validation
+    if (formData.gitlabLink && !formData.gitlabLink.startsWith('https://gitlab.com/')) {
+      newErrors.gitlabLink = 'Please enter a valid GitLab URL'
+    }
+
+    // GitHub Link validation
+    if (formData.githubLink && !formData.githubLink.startsWith('https://github.com/')) {
+      newErrors.githubLink = 'Please enter a valid GitHub URL'
+    }
+
+    // Website URL validation
+    if (formData.websiteUrl && !formData.websiteUrl.startsWith('http')) {
+      newErrors.websiteUrl = 'Please enter a valid URL starting with http:// or https://'
+    }
+
+    setErrors(newErrors)
+    return Object.keys(newErrors).length === 0
+  }
 
   const handleSubmit = (e) => {
     e.preventDefault()
-    console.log(formData)
-    // Add your project creation logic here
-    navigate('/dashboard')
+    if (validateForm()) {
+      console.log(formData)
+      // Add your project creation logic here
+      navigate('/dashboard')
+    }
   }
 
   const handleChange = (e) => {
@@ -44,7 +87,8 @@ function ProjectForm() {
               { name: 'figmaFileId', label: 'Figma File ID', type: 'text' },
               { name: 'figmaLink', label: 'Figma Full Link', type: 'url' },
               { name: 'gitlabLink', label: 'GitLab Link', type: 'url' },
-              { name: 'githubLink', label: 'GitHub Link', type: 'url' }
+              { name: 'githubLink', label: 'GitHub Link', type: 'url' },
+              { name: 'websiteUrl', label: 'Website URL', type: 'url' }
             ].map((field) => (
               <div key={field.name} className="space-y-1">
                 <label className={`block text-sm font-medium ${
@@ -61,8 +105,13 @@ function ProjectForm() {
                     theme === 'dark'
                       ? 'bg-gray-800/50 border-gray-700 text-white placeholder-gray-400'
                       : 'bg-gray-100/50 border-gray-300 text-gray-900 placeholder-gray-500'
-                  } border focus:outline-none focus:border-purple-500 focus:ring-1 focus:ring-purple-200 transition-all duration-300`}
+                  } border focus:outline-none focus:border-purple-500 focus:ring-1 focus:ring-purple-200 transition-all duration-300 ${
+                    errors[field.name] ? 'border-red-500' : ''
+                  }`}
                 />
+                {errors[field.name] && (
+                  <p className="text-sm text-red-500 mt-1">{errors[field.name]}</p>
+                )}
               </div>
             ))}
             <button

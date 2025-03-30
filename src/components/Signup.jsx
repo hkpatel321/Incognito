@@ -1,6 +1,6 @@
-import React, { useState } from 'react'
-import { useNavigate } from 'react-router-dom'
-import { useTheme } from '../context/ThemeContext'
+import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { useTheme } from '../context/ThemeContext';
 
 function Signup() {
   const navigate = useNavigate();
@@ -8,11 +8,33 @@ function Signup() {
   const [fullName, setFullName] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-
-  const handleSubmit = (e) => {
+  
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log({ fullName, email, password });
-    // Add your signup logic here
+
+    try {
+      const response = await fetch("https://hack-nu-thon-6-team-incognito.vercel.app/api/users/adduser", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify({ fullName:fullName, email:email, password:password })
+      });
+
+      const data = await response.json();
+
+      if (response.ok) {
+        console.log("Signup successful:", data);
+        alert("Account created successfully!");
+        navigate('/dashboard');
+      } else {
+        console.error("Signup failed:", data.message);
+        alert(data.message || "Signup failed");
+      }
+    } catch (error) {
+      console.error("Error:", error);
+      alert("Something went wrong. Please try again.");
+    }
   };
 
   return (
@@ -36,6 +58,7 @@ function Signup() {
                     ? 'bg-gray-800/50 border-gray-700 text-white placeholder-gray-400'
                     : 'bg-gray-100/50 border-gray-300 text-gray-900 placeholder-gray-500'
                 } border focus:outline-none focus:border-purple-500 focus:ring-2 focus:ring-purple-200 transform transition-all duration-300`} 
+                required
               />
             </div>
             <div className="space-y-2">
@@ -49,6 +72,7 @@ function Signup() {
                     ? 'bg-gray-800/50 border-gray-700 text-white placeholder-gray-400'
                     : 'bg-gray-100/50 border-gray-300 text-gray-900 placeholder-gray-500'
                 } border focus:outline-none focus:border-purple-500 transform transition-all duration-300`} 
+                required
               />
             </div>
             <div className="space-y-2">
@@ -62,6 +86,7 @@ function Signup() {
                     ? 'bg-gray-800/50 border-gray-700 text-white placeholder-gray-400'
                     : 'bg-gray-100/50 border-gray-300 text-gray-900 placeholder-gray-500'
                 } border focus:outline-none focus:border-purple-500 transform transition-all duration-300`} 
+                required
               />
             </div>
             <button className="w-full py-3 font-semibold rounded-lg bg-gradient-to-r from-purple-500 to-pink-500 text-white hover:from-pink-500 hover:to-purple-500 transform hover:-translate-y-1 transition-all duration-300 hover:shadow-[0_10px_20px_rgba(168,_85,_247,_0.4)]">
@@ -80,7 +105,7 @@ function Signup() {
         </div>
       </div>
     </div>
-  )
+  );
 }
 
-export default Signup
+export default Signup;
