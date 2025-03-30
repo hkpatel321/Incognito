@@ -38,6 +38,8 @@ function ProjectDashboard() {
   const [messageType, setMessageType] = useState(''); // 'success' or 'error'
   const [isReportAvailable, setIsReportAvailable] = useState(false); // Add this line
   const [testReportData, setTestReportData] = useState({ passed: 0, failed: 0 });
+  const [failedTests, setFailedTests] = useState([]);
+  const [suggestions, setSuggestions] = useState({});
 
   const handleDownloadReport = async () => {
     try {
@@ -87,7 +89,9 @@ function ProjectDashboard() {
     try {
       setIsLoading(true);
       setTestMessage('');
-      setIsReportAvailable(false); // Reset report availability
+      setIsReportAvailable(false);
+      setFailedTests([]);
+      
       const response = await fetch('https://02f6-2409-40c1-3a-a46a-10cd-129e-a00e-c558.ngrok-free.app/test-status', {
         method: 'POST',
         headers: {
@@ -107,16 +111,18 @@ function ProjectDashboard() {
       const data = await response.json();
       console.log(data);
       
-      // Display appropriate message based on status
+      // Extract failed tests
+      const failedTestCases = data.results ? data.results.filter(test => !test.passed) : [];
+      setFailedTests(failedTestCases);
+      
       if (data.status) {
         setTestMessage('All test cases passed successfully! 🎉');
         setMessageType('success');
-        setIsReportAvailable(true); // Enable report download after successful test
       } else {
-        setTestMessage('System test failed! ❌');
+        setTestMessage(`System test completed with ${failedTestCases.length} failed tests`);
         setMessageType('error');
-        setIsReportAvailable(true); // Enable report download even if test fails
       }
+      setIsReportAvailable(true);
     } catch (error) {
       console.error('Error fetching test status:', error);
       setTestMessage('Failed to get test status');
@@ -324,6 +330,27 @@ function ProjectDashboard() {
                 : 'bg-red-100 text-red-800 border border-red-200'
           }`}>
             {testMessage}
+          </div>
+        )}
+
+        {failedTests.length > 0 && (
+          <div className={`mb-6 ${
+            theme === 'dark'
+              ? 'bg-gray-900/50 border-gray-800'
+              : 'bg-white/50 border-gray-200'
+          } backdrop-blur-xl p-6 rounded-xl border`}>
+            <h2 className="text-xl font-semibold mb-4 bg-gradient-to-r from-red-500 to-pink-500 bg-clip-text text-transparent">
+              Failed Tests
+            </h2>
+            <div className="space-y-4">
+              {failedTests.map((test) => (
+                <div key={test.test_id} className="p-4 rounded-lg border border-red-500/20 bg-red-500/5">
+                  <h3 className="font-semibold text-red-400">
+                    {test.test_name} ({test.test_id})
+                  </h3>
+                </div>
+              ))}
+            </div>
           </div>
         )}
 

@@ -22,7 +22,7 @@ const Navbar = () => {
     } border-b transition-colors duration-300`}>
       <div className="max-w-screen-xl flex flex-wrap items-center justify-between mx-auto p-4">
         <a href="/" className="flex items-center">
-          <span className="self-center text-xl font-semibold whitespace-nowrap">Incognito</span>
+          <span className="self-center text-xl font-semibold whitespace-nowrap">PipeTest</span>
         </a>
         <div className="flex items-center gap-4">
           {isLoggedIn ? (
