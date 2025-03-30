@@ -48,7 +48,7 @@ function ProjectDashboard() {
             'Content-Type': 'application/json'
         },
         body: JSON.stringify({
-          WEBSITE_URL: "https://github.com/login"
+          WEBSITE_URL: "https://www.facebook.com/login.php/",
         }),
         timeout: 50000
       });
