@@ -35,9 +35,9 @@ function ProjectDashboard() {
   const navigate = useNavigate();
   const [isLoading, setIsLoading] = useState(false);
 
-  const handleSystemTest = async (e) => {
+  const handleSystemTest = async () => {
     try {
-      e.preventDefault();
+    
       setIsLoading(true);
       console.log("krish");
       const response = await axios.get('https://15f1-2401-4900-7903-cc20-55b3-3a11-a61f-366f.ngrok-free.app/test-status');
