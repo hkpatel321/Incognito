@@ -36,11 +36,53 @@ function ProjectDashboard() {
   const [isLoading, setIsLoading] = useState(false);
   const [testMessage, setTestMessage] = useState('');
   const [messageType, setMessageType] = useState(''); // 'success' or 'error'
+  const [isReportAvailable, setIsReportAvailable] = useState(false); // Add this line
+
+  const handleDownloadReport = async () => {
+    try {
+      setIsLoading(true);
+      const response = await fetch('https://f16d-202-131-110-12.ngrok-free.app/report', {
+        method: 'POST',
+        headers: {
+          'ngrok-skip-browser-warning': 'true',
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+          WEBSITE_URL: "https://github.com/login"
+        }),
+        timeout: 50000
+      });
+
+      if (!response.ok) {
+        throw new Error(`HTTP error! Status: ${response.status}`);
+      }
+
+      const data = await response.json();
+      
+      // Create and download the file
+      const blob = new Blob([JSON.stringify(data, null, 2)], { type: 'application/json' });
+      const url = window.URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = 'test-report.json';
+      document.body.appendChild(a);
+      a.click();
+      window.URL.revokeObjectURL(url);
+      document.body.removeChild(a);
+    } catch (error) {
+      console.error('Error downloading report:', error);
+      setTestMessage('Failed to download report');
+      setMessageType('error');
+    } finally {
+      setIsLoading(false);
+    }
+  };
 
   const handleSystemTest = async () => {
     try {
       setIsLoading(true);
       setTestMessage('');
+      setIsReportAvailable(false); // Reset report availability
       const response = await fetch('https://f16d-202-131-110-12.ngrok-free.app/test-status', {
         method: 'POST',
         headers: {
@@ -64,6 +106,7 @@ function ProjectDashboard() {
       if (data.status) {
         setTestMessage('All test cases passed successfully! 🎉');
         setMessageType('success');
+        setIsReportAvailable(true); // Enable report download after successful test
       } else {
         setTestMessage('System test failed! ❌');
         setMessageType('error');
@@ -251,6 +294,17 @@ function ProjectDashboard() {
             >
               {isLoading ? 'Running Test...' : 'System Test'}
             </button>
+            {isReportAvailable && (
+              <button
+                onClick={handleDownloadReport}
+                disabled={isLoading}
+                className={`px-6 py-3 rounded-lg bg-gradient-to-r from-green-500 to-emerald-500 text-white hover:from-emerald-500 hover:to-green-500 transform hover:-translate-y-1 transition-all duration-300 ${
+                  isLoading ? 'opacity-50 cursor-not-allowed' : ''
+                }`}
+              >
+                {isLoading ? 'Downloading...' : 'Download Report'}
+              </button>
+            )}
           </div>
         </div>
 
