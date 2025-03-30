@@ -454,7 +454,7 @@ function ProjectDashboard() {
             >
               <h3 className="text-lg font-semibold mb-2">{metric}</h3>
               <p className="text-3xl font-bold text-purple-500">
-                {index === 0 ? (ress?.numOfTests ?? 0)
+                {index === 0 ? (ress?.response?.numOfTests ?? 0)
                   : index === 1 ? `${projectData.passRate}%`
                   : projectData.status}
               </p>
