@@ -3,6 +3,7 @@ import axios from 'axios';
 import { useParams, useNavigate } from 'react-router-dom';
 import { useTheme } from '../context/ThemeContext';
 import { Line, Doughnut, Bar } from 'react-chartjs-2';
+import { useParams } from 'react-router-dom';
 import {
   Chart as ChartJS,
   CategoryScale,
@@ -40,7 +41,7 @@ function ProjectDashboard() {
   const [testReportData, setTestReportData] = useState({ passed: 0, failed: 0 });
   const [failedTests, setFailedTests] = useState([]);
   // const [suggestions, setSuggestions] = useState({});
-
+  
   const handleDownloadReport = async () => {
     try {
       setIsLoading(true);
@@ -121,9 +122,26 @@ function ProjectDashboard() {
         if (!response.ok) {
           throw new Error(`HTTP error! Status: ${response.status}`);
         }
-  
+        const [ress,setRess]=useState();
         const data = await response.json();
         console.log("testReportData", data);
+        try {
+          const response = await fetch('https://hack-nu-thon-6-team-incognito.vercel.app/api/resp/add-json', {
+            method: 'POST',
+            body: JSON.stringify({
+              projectId,
+              datak : data
+            }),
+            headers: {
+              'Content-Type': 'application/json'
+            },
+            timeout: 50000
+          });
+          setRess(response);
+          console.log('ress',ress)
+        } catch (error) {
+          console.log("error while add object",error);
+        }
   
         // Update test report data for the donut chart
         setTestReportData({
@@ -420,7 +438,7 @@ function ProjectDashboard() {
                   : 'bg-white/50 border-gray-200'
               } backdrop-blur-xl p-6 rounded-xl border`}
             >
-              <h3 className="text-lg font-semibold mb-2">{metric}</h3>
+              <h3 className="text-lg font-semibold mb-2">{me tric}</h3>
               <p className="text-3xl font-bold text-purple-500">
                 {index === 0 ? projectData.testsCount
                   : index === 1 ? `${projectData.passRate}%`
