@@ -40,6 +40,7 @@ function ProjectDashboard() {
   const [testReportData, setTestReportData] = useState({ passed: 0, failed: 0 });
   const [failedTests, setFailedTests] = useState([]);
   // const [suggestions, setSuggestions] = useState({});
+  const [ress,setRess]=useState();
   
   const handleDownloadReport = async () => {
     try {
@@ -121,7 +122,7 @@ function ProjectDashboard() {
         if (!response.ok) {
           throw new Error(`HTTP error! Status: ${response.status}`);
         }
-        const [ress,setRess]=useState();
+        
         const data = await response.json();
         console.log("testReportData", data);
         try {
@@ -138,9 +139,9 @@ function ProjectDashboard() {
             timeout: 50000
           });
           const responseData = await response.json(); // ✅ Extract JSON response
-          setRess(responseData); // ✅ Set state with actual response data
+        setRess(responseData); // ✅ Set state with actual response data
 
-          console.log('ress', responseData); 
+        console.log('ress', responseData); 
         } catch (error) {
           console.log("error while add object",error);
         }
