@@ -42,7 +42,7 @@ function ProjectDashboard() {
   const handleDownloadReport = async () => {
     try {
       setIsLoading(true);
-      const response = await fetch('https://f16d-202-131-110-12.ngrok-free.app/report', {
+      const response = await fetch('https://02f6-2409-40c1-3a-a46a-10cd-129e-a00e-c558.ngrok-free.app/report', {
         method: 'GET',
         headers: {
           'ngrok-skip-browser-warning': 'true',
@@ -88,7 +88,7 @@ function ProjectDashboard() {
       setIsLoading(true);
       setTestMessage('');
       setIsReportAvailable(false); // Reset report availability
-      const response = await fetch('https://f16d-202-131-110-12.ngrok-free.app/test-status', {
+      const response = await fetch('https://02f6-2409-40c1-3a-a46a-10cd-129e-a00e-c558.ngrok-free.app/test-status', {
         method: 'POST',
         headers: {
             'ngrok-skip-browser-warning': 'true',
