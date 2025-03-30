@@ -1,10 +1,12 @@
 import React, { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { useTheme } from '../context/ThemeContext'
+import { useProject } from '../context/ProjectContext'
 
 function ProjectForm() {
   const { theme } = useTheme()
   const navigate = useNavigate()
+  const { setProjectConfig } = useProject();
   const [formData, setFormData] = useState({
     personalAccessToken: '',
     figmaFileId: '',
@@ -57,9 +59,8 @@ function ProjectForm() {
   const handleSubmit = (e) => {
     e.preventDefault()
     if (validateForm()) {
-      console.log(formData)
-      // Add your project creation logic here
-      navigate('/dashboard')
+      setProjectConfig(formData);
+      navigate('/dashboard');
     }
   }
 
