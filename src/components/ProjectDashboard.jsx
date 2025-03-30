@@ -139,8 +139,9 @@ function ProjectDashboard() {
             timeout: 50000
           });
           const responseData = await response.json(); // ✅ Extract JSON response
-          console.log('ress', ress); 
+          
         setRess(responseData); // ✅ Set state with actual response data
+        console.log('ress', ress); 
         console.log("responseData", responseData);
 
         
@@ -445,7 +446,7 @@ function ProjectDashboard() {
             >
               <h3 className="text-lg font-semibold mb-2">{metric}</h3>
               <p className="text-3xl font-bold text-purple-500">
-                {index === 0 ? 55
+                {index === 0 ? (ress?.numOfTests ?? 0)
                   : index === 1 ? `${projectData.passRate}%`
                   : projectData.status}
               </p>
