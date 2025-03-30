@@ -191,12 +191,20 @@ function ProjectDashboard() {
               Last updated: {new Date().toLocaleDateString()}
             </p>
           </div>
-          <button
-            onClick={() => navigate('/dashboard')}
-            className="px-6 py-3 rounded-lg bg-gradient-to-r from-purple-500 to-pink-500 text-white hover:from-pink-500 hover:to-purple-500 transform hover:-translate-y-1 transition-all duration-300"
-          >
-            Back to Projects
-          </button>
+          <div className="flex gap-4">
+            <button
+              onClick={() => navigate('/dashboard')}
+              className="px-6 py-3 rounded-lg bg-gradient-to-r from-purple-500 to-pink-500 text-white hover:from-pink-500 hover:to-purple-500 transform hover:-translate-y-1 transition-all duration-300"
+            >
+              Back to Projects
+            </button>
+            <button
+              onClick={() => alert('Starting System Test...')}
+              className="px-6 py-3 rounded-lg bg-gradient-to-r from-blue-500 to-cyan-500 text-white hover:from-cyan-500 hover:to-blue-500 transform hover:-translate-y-1 transition-all duration-300"
+            >
+              System Test
+            </button>
+          </div>
         </div>
 
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 mb-8">
