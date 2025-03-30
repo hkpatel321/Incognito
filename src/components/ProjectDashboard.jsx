@@ -2,7 +2,6 @@ import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { useParams, useNavigate } from 'react-router-dom';
 import { useTheme } from '../context/ThemeContext';
-import { useProject } from '../context/ProjectContext';
 import { Line, Doughnut, Bar } from 'react-chartjs-2';
 import {
   Chart as ChartJS,
@@ -33,7 +32,6 @@ ChartJS.register(
 function ProjectDashboard() {
   const { projectId } = useParams();
   const { theme } = useTheme();
-  const { projectConfig } = useProject();
   const navigate = useNavigate();
   const [isLoading, setIsLoading] = useState(false);
   const [testMessage, setTestMessage] = useState('');
@@ -47,12 +45,8 @@ function ProjectDashboard() {
         method: 'GET',
         headers: {
             'ngrok-skip-browser-warning': 'true',
-            'Content-Type': 'application/json',
-            
+            'Content-Type': 'application/json'
         },
-        body: JSON.stringify({
-          WEBSITE_URL : "https://github.com/login"
-        }),
         timeout: 50000
       });
 
