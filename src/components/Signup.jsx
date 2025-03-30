@@ -29,7 +29,7 @@ function Signup() {
         console.log("Signup successful:", data);
         alert("Account created successfully!");
         localStorage.setItem("email",email); 
-        localStorage.set("token",data.token);
+        localStorage.setItem("token",data.token);
         navigate('/dashboard');
       } else {
         console.error("Signup failed:", data.message);
