@@ -110,6 +110,7 @@ function ProjectDashboard() {
       } else {
         setTestMessage('System test failed! ❌');
         setMessageType('error');
+        setIsReportAvailable(true); // Enable report download even if test fails
       }
     } catch (error) {
       console.error('Error fetching test status:', error);
