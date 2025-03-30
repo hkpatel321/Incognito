@@ -15,10 +15,11 @@ function Signup() {
     try {
       const response = await fetch("https://hack-nu-thon-6-team-incognito.vercel.app/api/users/adduser", {
         method: "POST",
-        headers: {
+        headers:{
           "Content-Type": "application/json"
         },
-        body: JSON.stringify({ fullName:fullName, email:email, password:password })
+        
+        body: JSON.stringify({ fullname:fullName, email:email, password:password })
       });
 
       const data = await response.json();
