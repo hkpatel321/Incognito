@@ -140,8 +140,12 @@ function ProjectDashboard() {
           });
           const responseData = await response.json(); // ✅ Extract JSON response
           
-        setRess(responseData); // ✅ Set state with actual response data
-        console.log('ress', ress); 
+        setRess(responseData); 
+        // ✅ Set state with actual response data
+        setTimeout(() => {
+          
+          console.log('ress', ress); 
+        },1000)
         console.log("responseData", responseData);
 
         
@@ -211,6 +215,9 @@ function ProjectDashboard() {
       setIsLoading(false);
     }
   };
+  useEffect(() => {
+    console.log("Updated ress:", ress);
+  }, [ress]);
 
   // Mock data based on projectId
   const mockProjects = {
