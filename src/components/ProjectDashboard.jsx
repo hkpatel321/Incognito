@@ -318,7 +318,7 @@ function ProjectDashboard() {
           const formattedDate = date.toISOString().split('T')[0];
   
           const run = ress?.response?.jsonObjects?.find(r => 
-            r.execution_date.startsWith(formattedDate)
+            r.execution_date && r.execution_date.startsWith(formattedDate)
           );
           
           return run ? ((run.passed_tests / run.total_tests) * 100).toFixed(2) : null;
@@ -335,10 +335,10 @@ function ProjectDashboard() {
           const formattedDate = date.toISOString().split('T')[0];
   
           const run = ress?.response?.jsonObjects?.find(r => 
-            r.execution_date.startsWith(formattedDate)
+            r.execution_date && r.execution_date.startsWith(formattedDate)
           );
           
-          return run ? ((run.total_tests / 10) * 100).toFixed(2) : null; // Assuming 10 is max tests
+          return run ? ((run.total_tests / 10) * 100).toFixed(2) : null; // Assuming max tests = 10
         }),
         borderColor: theme === 'dark' ? '#F59E0B' : '#EC4899',
         tension: 0.4,
