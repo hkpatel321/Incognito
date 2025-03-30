@@ -37,7 +37,6 @@ function ProjectDashboard() {
 
   const handleSystemTest = async () => {
     try {
-    
       setIsLoading(true);
       const response = await fetch('https://1386-202-131-110-60.ngrok-free.app/test-status', {
         method: 'GET',
@@ -45,19 +44,25 @@ function ProjectDashboard() {
             'ngrok-skip-browser-warning': 'true',
             'Content-Type': 'application/json'
         },
-        timeout: 50000 // fetch doesn't support timeout directly
-    });
+        timeout: 50000
+      });
 
-    if (!response.ok) {
+      if (!response.ok) {
         throw new Error(`HTTP error! Status: ${response.status}`);
-    }
+      }
 
-    const data = await response.json();
-    console.log(data);
+      const data = await response.json();
+      console.log(data);
+      
+      // Display appropriate message based on status
+      if (data.status) {
+        alert('All test cases passed successfully! 🎉');
+      } else {
+        alert('System test failed! ❌');
+      }
     } catch (error) {
-      console.log("krish");
       console.error('Error fetching test status:', error);
-      alert(error.response?.data?.message || 'Failed to get test status');
+      alert('Failed to get test status');
     } finally {
       setIsLoading(false);
     }
