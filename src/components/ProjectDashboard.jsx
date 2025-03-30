@@ -141,7 +141,7 @@ function ProjectDashboard() {
           const responseData = await response.json(); // ✅ Extract JSON response
         setRess(responseData); // ✅ Set state with actual response data
 
-        console.log('ress', responseData); 
+        console.log('ress', ress); 
         } catch (error) {
           console.log("error while add object",error);
         }
