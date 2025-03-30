@@ -37,6 +37,7 @@ function ProjectDashboard() {
   const [testMessage, setTestMessage] = useState('');
   const [messageType, setMessageType] = useState(''); // 'success' or 'error'
   const [isReportAvailable, setIsReportAvailable] = useState(false); // Add this line
+  const [testReportData, setTestReportData] = useState({ passed: 0, failed: 0 });
 
   const handleDownloadReport = async () => {
     try {
@@ -47,7 +48,6 @@ function ProjectDashboard() {
           'ngrok-skip-browser-warning': 'true',
           'Content-Type': 'application/json'
         },
-    
         timeout: 50000
       });
 
@@ -57,6 +57,13 @@ function ProjectDashboard() {
 
       const data = await response.json();
       console.log(data);
+
+      // Update test report data for the donut chart
+      setTestReportData({
+        passed: data.passed_tests,
+        failed: data.failed_tests
+      });
+
       // Create and download the file
       const blob = new Blob([JSON.stringify(data, null, 2)], { type: 'application/json' });
       const url = window.URL.createObjectURL(blob);
@@ -203,15 +210,14 @@ function ProjectDashboard() {
     ]
   };
 
-  // Data for test distribution pie chart
+  // Update test distribution data dynamically
   const testDistributionData = {
-    labels: ['UI Tests', 'API Tests', 'Integration Tests'],
+    labels: ['Passed Tests', 'Failed Tests'],
     datasets: [{
-      data: testSuites.map(suite => suite.total),
+      data: [testReportData.passed, testReportData.failed],
       backgroundColor: [
-        'rgba(147, 51, 234, 0.7)',
-        'rgba(59, 130, 246, 0.7)',
-        'rgba(16, 185, 129, 0.7)'
+        'rgba(16, 185, 129, 0.7)', // Green for passed
+        'rgba(239, 68, 68, 0.7)'  // Red for failed
       ],
       borderColor: theme === 'dark' ? 'rgba(0, 0, 0, 0.2)' : 'rgba(255, 255, 255, 0.2)',
       borderWidth: 1,
