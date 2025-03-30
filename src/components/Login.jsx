@@ -26,6 +26,7 @@ function Login() {
         console.log("Login successful:", data);
         // Store token if needed
         localStorage.setItem("token", data.token);
+        localStorage.setIten("email", email);
         navigate('/dashboard');
       } else {
         console.error("Login failed:", data.message);

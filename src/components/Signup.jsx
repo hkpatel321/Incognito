@@ -28,6 +28,8 @@ function Signup() {
       if (response.ok) {
         console.log("Signup successful:", data);
         alert("Account created successfully!");
+        localStorage.setItem("email",email); 
+        localStorage.set("token",data.token);
         navigate('/dashboard');
       } else {
         console.error("Signup failed:", data.message);
