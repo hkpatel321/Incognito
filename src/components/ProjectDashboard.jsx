@@ -364,6 +364,21 @@ function ProjectDashboard() {
       }
     }
   };
+  const calculatePassRate = () => {
+    if (!ress?.response?.jsonObjects) return 0;
+  
+    let totalTests = 0;
+    let passedTests = 0;
+  
+    ress.response.jsonObjects.forEach((test) => {
+      if (test.passed_tests !== undefined && test.total_tests !== undefined) {
+        passedTests += test.passed_tests;
+        totalTests += test.total_tests;
+      }
+    });
+  
+    return totalTests > 0 ? ((passedTests / totalTests) * 100).toFixed(2) : 0;
+  };
 
   return (
     <div className="min-h-[calc(100vh-64px)] p-6">
@@ -455,7 +470,7 @@ function ProjectDashboard() {
               <h3 className="text-lg font-semibold mb-2">{metric}</h3>
               <p className="text-3xl font-bold text-purple-500">
                 {index === 0 ? (ress?.response?.numOfTests ?? 0)
-                  : index === 1 ? `${projectData.passRate}%`
+                  : index === 1 ? `${calculatePassRate()}%`
                   : projectData.status}
               </p>
             </div>
@@ -529,7 +544,7 @@ function ProjectDashboard() {
           } backdrop-blur-xl p-6 rounded-xl border`}>
             <h2 className="text-xl font-semibold mb-4">Recent Test Runs</h2>
             <div className="space-y-4">
-              {recentRuns.map(run => (
+              {/* {recentRuns.map(run => (
                 <div key={run.id} className="flex justify-between items-center">
                   <span>{run.timestamp}</span>
                   <span className={`px-3 py-1 rounded-full text-sm ${
@@ -540,6 +555,19 @@ function ProjectDashboard() {
                     {run.status}
                   </span>
                 </div>
+              ))} */}
+                            {ress?.response?.jsonObjects
+                ?.slice() // Create a copy of the array
+                .sort((a, b) => new Date(b.execution_date) - new Date(a.execution_date)) // Sort by latest execution date
+                .map((run, index) => (
+                  <div key={index} className="flex justify-between items-center">
+                    <span>{new Date(run.execution_date).toLocaleString()}</span>
+                    <span className="px-3 py-1 rounded-full text-sm">
+                      {run.total_tests > 0 
+                        ? `${((run.passed_tests / run.total_tests) * 100).toFixed(2)}% Passed`
+                        : 'No Tests'}
+                    </span>
+                  </div>
               ))}
             </div>
           </div>
