@@ -41,11 +41,14 @@ function ProjectDashboard() {
     try {
       setIsLoading(true);
       setTestMessage('');
-      const response = await fetch('https://1386-202-131-110-60.ngrok-free.app/test-status', {
+      const response = await fetch('https://74b3-202-131-110-60.ngrok-free.app/test-status', {
         method: 'GET',
         headers: {
             'ngrok-skip-browser-warning': 'true',
             'Content-Type': 'application/json'
+        },
+        body : {
+          WEBSITE_URL : "https://github.com/login"
         },
         timeout: 50000
       });
