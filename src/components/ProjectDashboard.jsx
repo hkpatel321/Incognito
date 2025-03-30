@@ -40,7 +40,7 @@ function ProjectDashboard() {
     
       setIsLoading(true);
       console.log("krish");
-      const response = await axios.get('https://15f1-2401-4900-7903-cc20-55b3-3a11-a61f-366f.ngrok-free.app/test-status');
+      const response = await axios.get('https://8129-2409-40c1-100b-7ec-f0c1-3376-e922-72ae.ngrok-free.app/test-status',{timeout:50000});
       console.log(response);
       alert(`Test Status: ${JSON.stringify(response.data)}`);
     } catch (error) {
