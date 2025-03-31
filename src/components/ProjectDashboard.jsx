@@ -456,22 +456,38 @@ function ProjectDashboard() {
       }
     }
   };
-  const calculatePassRate = () => {
-    if (!ress?.response?.jsonObjects) return 0;
+    // const calculatePassRate = () => {
+    //   if (!ress?.response?.jsonObjects) return 0;
+    
+    //   let totalTests = 0;
+    //   let passedTests = 0;
+    
+    //   ress.response.jsonObjects.forEach((test) => {
+    //     if (test.passed_tests !== undefined && test.total_tests !== undefined) {
+    //       passedTests += test.passed_tests;
+    //       totalTests += test.total_tests;
+    //     }
+    //   });
+    
+    //   return totalTests > 0 ? ((passedTests / totalTests) * 100).toFixed(2) : 0;
+    // };
+    const calculatePassRate = () => {
+      const jsonObjects = ress?.responseDoc?.jsonObjects || ress?.response?.jsonObjects;
+      if (!jsonObjects) return 0;
   
-    let totalTests = 0;
-    let passedTests = 0;
+      let totalTests = 0;
+      let passedTests = 0;
   
-    ress.response.jsonObjects.forEach((test) => {
-      if (test.passed_tests !== undefined && test.total_tests !== undefined) {
-        passedTests += test.passed_tests;
-        totalTests += test.total_tests;
-      }
-    });
+      jsonObjects.forEach((test) => {
+          if (test.passed_tests !== undefined && test.total_tests !== undefined) {
+              passedTests += test.passed_tests;
+              totalTests += test.total_tests;
+          }
+      });
   
-    return totalTests > 0 ? ((passedTests / totalTests) * 100).toFixed(2) : 0;
+      return totalTests > 0 ? ((passedTests / totalTests) * 100).toFixed(2) : 0;
   };
-
+  
   return (
     <div className="min-h-[calc(100vh-64px)] p-6">
       <div className="max-w-7xl mx-auto">
