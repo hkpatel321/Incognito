@@ -45,7 +45,7 @@ function ProjectDashboard() {
   const handleDownloadReport = async () => {
     try {
       setIsLoading(true);
-      const response = await fetch('https://f04b-2409-40c1-200b-f09-8d67-5ed6-ef82-edd3.ngrok-free.app/report', {
+      const response = await fetch('https://927d-2409-40c1-200b-f09-a418-6cba-b0d1-4758.ngrok-free.app/report', {
         method: 'GET',
         headers: {
           'ngrok-skip-browser-warning': 'true',
@@ -93,7 +93,7 @@ function ProjectDashboard() {
       setIsReportAvailable(false);
       setFailedTests([]);
       
-      const response = await fetch('https://f04b-2409-40c1-200b-f09-8d67-5ed6-ef82-edd3.ngrok-free.app/test-status', {
+      const response = await fetch('https://927d-2409-40c1-200b-f09-a418-6cba-b0d1-4758.ngrok-free.app/test-status', {
         method: 'POST',
         headers: {
             'ngrok-skip-browser-warning': 'true',
@@ -110,7 +110,7 @@ function ProjectDashboard() {
       }
       try {
         setIsLoading(true);
-        const response = await fetch('https://f04b-2409-40c1-200b-f09-8d67-5ed6-ef82-edd3.ngrok-free.app/report', {
+        const response = await fetch('https://927d-2409-40c1-200b-f09-a418-6cba-b0d1-4758.ngrok-free.app/report', {
           method: 'GET',
           headers: {
             'ngrok-skip-browser-warning': 'true',
@@ -280,29 +280,6 @@ function ProjectDashboard() {
   }));
 
   // Generate mock data for test performance over time
-  // const timeSeriesData = {
-  //   labels: Array.from({ length: 7 }, (_, i) => {
-  //     const date = new Date();
-  //     date.setDate(date.getDate() - (6 - i));
-  //     return date.toLocaleDateString();
-  //   }),
-  //   datasets: [
-  //     {
-  //       label: 'Pass Rate',
-  //       data: Array.from({ length: 7 }, () => Math.floor(Math.random() * 30) + 70),
-  //       borderColor: theme === 'dark' ? '#10B981' : '#8B5CF6',
-  //       tension: 0.4,
-  //       fill: false,
-  //     },
-  //     {
-  //       label: 'Test Coverage',
-  //       data: Array.from({ length: 7 }, () => Math.floor(Math.random() * 20) + 75),
-  //       borderColor: theme === 'dark' ? '#F59E0B' : '#EC4899',
-  //       tension: 0.4,
-  //       fill: false,
-  //     }
-  //   ]
-  // };
   const timeSeriesData = {
     labels: Array.from({ length: 7 }, (_, i) => {
       const date = new Date();
@@ -312,40 +289,63 @@ function ProjectDashboard() {
     datasets: [
       {
         label: 'Pass Rate',
-        data: Array.from({ length: 7 }, (_, i) => {
-          const date = new Date();
-          date.setDate(date.getDate() - (6 - i));
-          const formattedDate = date.toISOString().split('T')[0];
-  
-          const run = ress?.response?.jsonObjects?.find(r => 
-            r.execution_date && r.execution_date.startsWith(formattedDate)
-          );
-          
-          return run ? ((run.passed_tests / run.total_tests) * 100).toFixed(2) : null;
-        }),
+        data: Array.from({ length: 7 }, () => Math.floor(Math.random() * 30) + 70),
         borderColor: theme === 'dark' ? '#10B981' : '#8B5CF6',
         tension: 0.4,
         fill: false,
       },
       {
         label: 'Test Coverage',
-        data: Array.from({ length: 7 }, (_, i) => {
-          const date = new Date();
-          date.setDate(date.getDate() - (6 - i));
-          const formattedDate = date.toISOString().split('T')[0];
-  
-          const run = ress?.response?.jsonObjects?.find(r => 
-            r.execution_date && r.execution_date.startsWith(formattedDate)
-          );
-          
-          return run ? ((run.total_tests / 10) * 100).toFixed(2) : null; // Assuming max tests = 10
-        }),
+        data: Array.from({ length: 7 }, () => Math.floor(Math.random() * 20) + 75),
         borderColor: theme === 'dark' ? '#F59E0B' : '#EC4899',
         tension: 0.4,
         fill: false,
       }
     ]
   };
+  // const timeSeriesData = {
+  //   labels: Array.from({ length: 7 }, (_, i) => {
+  //     const date = new Date();
+  //     date.setDate(date.getDate() - (6 - i));
+  //     return date.toLocaleDateString();
+  //   }),
+  //   datasets: [
+  //     {
+  //       label: 'Pass Rate',
+  //       data: Array.from({ length: 7 }, (_, i) => {
+  //         const date = new Date();
+  //         date.setDate(date.getDate() - (6 - i));
+  //         const formattedDate = date.toISOString().split('T')[0];
+  
+  //         const run = ress?.response?.jsonObjects?.find(r => 
+  //           r.execution_date && r.execution_date.startsWith(formattedDate)
+  //         );
+          
+  //         return run ? ((run.passed_tests / run.total_tests) * 100).toFixed(2) : null;
+  //       }),
+  //       borderColor: theme === 'dark' ? '#10B981' : '#8B5CF6',
+  //       tension: 0.4,
+  //       fill: false,
+  //     },
+  //     {
+  //       label: 'Test Coverage',
+  //       data: Array.from({ length: 7 }, (_, i) => {
+  //         const date = new Date();
+  //         date.setDate(date.getDate() - (6 - i));
+  //         const formattedDate = date.toISOString().split('T')[0];
+  
+  //         const run = ress?.response?.jsonObjects?.find(r => 
+  //           r.execution_date && r.execution_date.startsWith(formattedDate)
+  //         );
+          
+  //         return run ? ((run.total_tests / 10) * 100).toFixed(2) : null; // Assuming max tests = 10
+  //       }),
+  //       borderColor: theme === 'dark' ? '#F59E0B' : '#EC4899',
+  //       tension: 0.4,
+  //       fill: false,
+  //     }
+  //   ]
+  // };
   
 
   // Update test distribution data dynamically
