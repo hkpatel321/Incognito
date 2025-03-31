@@ -39,9 +39,57 @@ function ProjectDashboard() {
   const [isReportAvailable, setIsReportAvailable] = useState(false); // Add this line
   const [testReportData, setTestReportData] = useState({ passed: 0, failed: 0 });
   const [failedTests, setFailedTests] = useState([]);
+  const [beforeload, setBeforeLoad] = useState(null);
+
   // const [suggestions, setSuggestions] = useState({});
   const [ress,setRess]=useState();
+  useEffect(()=>{
+    const fetchData = async() =>{
+      try {
+        setIsLoading(true);
+        const response = await fetch('https://hack-nu-thon-6-team-incognito.vercel.app/api/resp/getResponse', {
+          method: 'POST',
+          body: JSON.stringify({
+            projectId
+          }),
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          timeout: 50000
+        });
+
+        const responseData = await response.json(); // ✅ Extract JSON response
+        console.log("responseData", responseData);
+        setRess(responseData); 
+
+        const data = responseData.response.jsonObjects[0];
+        setTestReportData({
+          passed: data.passed_tests,
+          failed: data.failed_tests
+        });
+        const failedTestCases = data.results ? data.results.filter(test => (test.status==="FAILED")) : [];
+        console.log("krish",failedTestCases);
+        setFailedTests(failedTestCases);
+
+        if (data.status) {
+          setTestMessage('All test cases passed successfully! 🎉');
+          setMessageType('success');
+        } else {
   
+          setTestMessage(`System test completed with ${failedTestCases.length} failed tests`);
+          setMessageType('error');
+        }
+      } catch (error) {
+        console.log("error while before loading button" , error);
+      } finally{
+        setIsLoading(false);
+      }
+    } 
+    fetchData();
+ },
+  [ress])
+
+
   const handleDownloadReport = async () => {
     try {
       setIsLoading(true);
