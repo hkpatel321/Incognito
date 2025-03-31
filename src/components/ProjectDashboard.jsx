@@ -55,7 +55,7 @@ function ProjectDashboard() {
           headers: {
             'Content-Type': 'application/json'
           },
-          timeout: 50000
+          timeout: 500000
         });
 
         const responseData = await response.json(); // ✅ Extract JSON response
@@ -99,7 +99,7 @@ function ProjectDashboard() {
           'ngrok-skip-browser-warning': 'true',
           'Content-Type': 'application/json'
         },
-        timeout: 50000
+        timeout: 500000
       });
 
       if (!response.ok) {
@@ -150,7 +150,7 @@ function ProjectDashboard() {
         body: JSON.stringify({
           WEBSITE_URL: "https://github.com/login"
         }),
-        timeout: 50000
+        timeout: 500000
       });
 
       if (!response.ok) {
@@ -164,7 +164,7 @@ function ProjectDashboard() {
             'ngrok-skip-browser-warning': 'true',
             'Content-Type': 'application/json'
           },
-          timeout: 50000
+          timeout: 500000
         });
   
         if (!response.ok) {
@@ -184,7 +184,7 @@ function ProjectDashboard() {
             headers: {
               'Content-Type': 'application/json'
             },
-            timeout: 50000
+            timeout: 500000
           });
           const responseData = await response.json(); // ✅ Extract JSON response
           console.log("responseData", responseData);
