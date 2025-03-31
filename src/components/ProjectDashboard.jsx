@@ -72,14 +72,14 @@ function ProjectDashboard() {
         console.log("krish",failedTestCases);
         setFailedTests(failedTestCases);
 
-        if (data.status) {
-          setTestMessage('All test cases passed successfully! 🎉');
-          setMessageType('success');
-        } else {
+        // if (data.status) {
+        //   // setTestMessage('All test cases passed successfully! 🎉');
+        //   setMessageType('success');
+        // } else {
   
-          setTestMessage(`System test completed with ${failedTestCases.length} failed tests`);
-          setMessageType('error');
-        }
+        //   setTestMessage(`System test completed with ${failedTestCases.length} failed tests`);
+        //   setMessageType('error');
+        // }
       } catch (error) {
         console.log("error while before loading button" , error);
       } finally{
@@ -472,7 +472,7 @@ function ProjectDashboard() {
     //   return totalTests > 0 ? ((passedTests / totalTests) * 100).toFixed(2) : 0;
     // };
     const calculatePassRate = () => {
-      const jsonObjects = ress?.responseDoc?.jsonObjects || ress?.response?.jsonObjects;
+      const jsonObjects = ress?.response?.jsonObjects||ress?.responseDoc?.jsonObjects  ;
       if (!jsonObjects) return 0;
   
       let totalTests = 0;
@@ -576,11 +576,17 @@ function ProjectDashboard() {
               } backdrop-blur-xl p-6 rounded-xl border`}
             >
               <h3 className="text-lg font-semibold mb-2">{metric}</h3>
-              <p className="text-3xl font-bold text-purple-500">
+              {/* <p className="text-3xl font-bold text-purple-500">
                 {index === 0 ? (ress?.response?.numOfTests ?? 0)
                   : index === 1 ? `${calculatePassRate()}%`
                   : projectData.status}
+              </p> */}
+              <p className="text-3xl font-bold text-purple-500">
+                {index === 0 ? (ress?.response?.numOfTests ?? ress?.responseDoc?.numOfTests ?? 0)
+                  : index === 1 ? `${calculatePassRate()}%`
+                  : projectData.status}
               </p>
+
             </div>
           ))}
         </div>
@@ -677,7 +683,20 @@ function ProjectDashboard() {
                     </span>
                   </div>
               ))} */}
-              {ress?.response?.jsonObjects
+              {/* {ress?.response?.jsonObjects
+  ?.slice() // Create a copy of the array
+  .sort((a, b) => new Date(b.execution_date).getTime() - new Date(a.execution_date).getTime()) // Ensure proper sorting
+  .map((run, index) => (
+    <div key={index} className="flex justify-between items-center">
+      <span>{new Date(run.execution_date).toLocaleString()}</span>
+      <span className="px-3 py-1 rounded-full text-sm">
+        {run.total_tests > 0 
+          ? `${((run.passed_tests / run.total_tests) * 100).toFixed(2)}% Passed`
+          : 'No Tests'}
+      </span>
+    </div>
+))} */}
+{(ress?.response?.jsonObjects ?? ress?.responseDoc?.jsonObjects)
   ?.slice() // Create a copy of the array
   .sort((a, b) => new Date(b.execution_date).getTime() - new Date(a.execution_date).getTime()) // Ensure proper sorting
   .map((run, index) => (
@@ -690,6 +709,7 @@ function ProjectDashboard() {
       </span>
     </div>
 ))}
+
             </div>
           </div>
         </div>
