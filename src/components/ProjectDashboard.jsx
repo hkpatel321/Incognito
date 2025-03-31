@@ -62,7 +62,7 @@ function ProjectDashboard() {
         console.log("responseData", responseData);
         setRess(responseData); 
 
-        const data = responseData.response.jsonObjects[0];
+        const data = responseData.responseDoc.jsonObjects[0];
         console.log("krish" , data);
         setTestReportData({
           passed: data.passed_tests,
